@@ -1,4 +1,5 @@
 use components::header::Header;
+use components::todo::todo_form::TodoForm;
 use components::todo::todo_list::TodoList;
 use yew::prelude::*;
 
@@ -10,6 +11,7 @@ fn app() -> Html {
         <>
             <Header />
             <main class="container-fluid mt-2">
+                <TodoForm />
                 <TodoList />
             </main>
         </>
