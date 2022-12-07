@@ -1,7 +1,14 @@
-use yew::{function_component, html, use_state, Callback, Html, InputEvent};
+use yew::{
+    function_component, html, use_state, Callback, Html, InputEvent, MouseEvent, Properties,
+};
+
+#[derive(Properties, PartialEq)]
+pub struct TodoFormProps {
+    pub on_add: Callback<String>,
+}
 
 #[function_component(TodoForm)]
-pub fn todo_form() -> Html {
+pub fn todo_form(props: &TodoFormProps) -> Html {
     let title = use_state(|| "".to_string());
 
     let oninput = {
@@ -19,6 +26,17 @@ pub fn todo_form() -> Html {
             }
         })
     };
+
+    let onclick = {
+        let on_add = props.on_add.clone();
+        let title = title.clone();
+        Callback::from(move |e: MouseEvent| {
+            e.prevent_default();
+            title.set("".to_string());
+            on_add.emit((*title).clone());
+        })
+    };
+
     html! {
       <form class="mb-5">
         <div class="mb-3">
@@ -28,7 +46,7 @@ pub fn todo_form() -> Html {
         <div class="mb-3">
           {&*title}
         </div>
-        <button type="submit" class="btn btn-primary">{"追加"}</button>
+        <button type="submit" {onclick} class="btn btn-primary">{"追加"}</button>
       </form>
     }
 }
