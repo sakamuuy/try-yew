@@ -1,12 +1,15 @@
 use yew::prelude::*;
+use components::header::Header;
+
+mod components;
 
 #[function_component(App)]
 fn app() -> Html {
     html! {
-        <h1>{ "Hello World" }</h1>
+        <Header />
     }
 }
 
 fn main() {
-    println!("Hello, world!");
+    yew::Renderer::<App>::new().render();
 }
